@@ -1,4 +1,0 @@
-zone "wt20.ephec-ti.be" {
-        type master;
-        file "wt20.ephec-ti.be.zone";
-};

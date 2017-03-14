@@ -1,0 +1,28 @@
+version: "2"
+services:
+  flask:
+    build: 
+      context: ./flask/
+    environment:
+      - POSTGRES_USER=woodytoys
+      - POSTGRES_DB=woodytoys
+      - POSTGRES_PASSWORD=super-secret-pwd
+    links:
+      - postgres
+  postgres:
+    build:
+      context: ./database
+    environment:
+      - POSTGRES_USER=woodytoys
+      - POSTGRES_DB=woodytoys
+      - POSTGRES_PASSWORD=super-secret-pwd
+  nginx:
+    build:
+      context: ./nginx/
+    volumes:
+      - ./nginx/www:/var/www/woody
+    ports:
+      - "80:80"
+    links:
+      - flask
+    
