@@ -11,8 +11,8 @@ conn = dbconnect(dbname=environ["POSTGRES_DB"], user=environ["POSTGRES_USER"],
 def index():
 	return "Hello world !\n"
 
-@app.route("/dt")
-def dt():
+@app.route("/now")
+def now():
 	return datetime.now().strftime("%c") + "\n"
 
 @app.route("/db")
@@ -23,6 +23,5 @@ def db():
 	return jsonify(list(map(lambda row: {"name": row[0], "stock": row[1]}, cur.fetchall())))
 
 if __name__ == "__main__":
-	print("Should run on 0.0.0.0:8080")
 	app.run(host="0.0.0.0", port=8080)
 
