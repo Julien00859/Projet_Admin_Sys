@@ -1,0 +1,12 @@
+version: '2'
+services:
+ dns:
+  image: resystit/bind9
+  container_name: dns
+  ports:
+   - "53:53/udp"
+   - "53:53/tcp"
+  volumes:
+   - ./bind:/etc/bind
+   - ./bind/db.wt20.ephec-ti.be:/var/cache/bind/db.wt20.ephec-ti.be
+   - ./resolv.conf:/etc/resolv.conf
