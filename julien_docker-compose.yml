@@ -17,12 +17,14 @@ services:
       - POSTGRES_DB=woodytoys
       - POSTGRES_PASSWORD=super-secret-pwd
   nginx:
-    build:
-      context: ./nginx/
+    image: nginx:stable
     volumes:
-      - ./nginx/www:/var/www/woody
+      - ./nginx/www:/var/www/
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - /etc/letsencrypt/:/etc/letsencrypt/
     ports:
       - "80:80"
+      - "443:443"
     links:
       - flask
     

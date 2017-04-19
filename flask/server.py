@@ -2,10 +2,19 @@ from flask import Flask, jsonify
 from psycopg2 import connect as dbconnect
 from os import environ
 from datetime import datetime
+from time import sleep
 
 app = Flask(__name__)
-conn = dbconnect(dbname=environ["POSTGRES_DB"], user=environ["POSTGRES_USER"], 
-                 password=environ["POSTGRES_PASSWORD"], host="postgres")
+for x in range(5):
+	try:
+		conn = dbconnect(dbname=environ["POSTGRES_DB"], user=environ["POSTGRES_USER"], 
+                		 password=environ["POSTGRES_PASSWORD"], host="postgres")
+	except:
+		print("Connexion error, retry in 5 seconds")
+		sleep(5)
+	else:
+		break
+		
 
 @app.route("/")
 def index():
