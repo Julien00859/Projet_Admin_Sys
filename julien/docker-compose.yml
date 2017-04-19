@@ -10,14 +10,15 @@ services:
     links:
       - postgres
   postgres:
-    build:
-      context: ./database
+    image: postgres:alpine
+    volumes:
+      - ./flask/sql/:/docker-entrypoint-initdb.d/
     environment:
       - POSTGRES_USER=woodytoys
       - POSTGRES_DB=woodytoys
       - POSTGRES_PASSWORD=super-secret-pwd
   nginx:
-    image: nginx:stable
+    image: nginx:alpine
     volumes:
       - ./nginx/www:/var/www/
       - ./nginx/conf.d:/etc/nginx/conf.d
@@ -27,4 +28,11 @@ services:
       - "443:443"
     links:
       - flask
-    
+  dns:
+    image: resystit/bind9
+    container_name: dns
+    ports: 
+      - "53:53/udp"
+      - "53:53/tcp"
+    volumes:
+      - /home/martin/dns/bind:/etc/bind    
