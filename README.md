@@ -10,8 +10,9 @@ School Project
 
 ### Shéma logique
 
-!(logic)[./logic_diagram.png]
+![logic](./logic_diagram.png)
 
 ### Shéma physique
 
-!(physic)[./physic_diagram.png]
+![physic](./physic_diagram.png)
+
