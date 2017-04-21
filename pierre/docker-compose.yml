@@ -1,0 +1,12 @@
+version: '2'
+services:
+ dns_SOA:
+  image: resystit/bind9  
+  container_name: dns_SOA
+  ports:
+   - "53:53/udp"
+   - "53:53/tcp"
+  volumes: 
+   - ./dns/bind:/etc/bind
+   - ./dns/bind/db.wt20.ephec-ti.be:/var/cache/bind/db.wt20.ephec-ti.be
+
