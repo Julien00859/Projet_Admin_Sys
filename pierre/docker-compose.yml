@@ -1,8 +1,8 @@
 version: '2'
 services:
- dns_SOA:
+ dns_SOA_interne:
   image: resystit/bind9  
-  container_name: dns_SOA
+  container_name: dns_SOA_interne
   ports:
    - "53:53/udp"
    - "53:53/tcp"
