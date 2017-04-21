@@ -18,7 +18,6 @@ ns1     IN      A       79.137.38.250
 serverWeb       IN      A       151.80.119.124
 www             IN      CNAME   serverWeb
 b2b             IN      CNAME   serverWeb
-intranet        IN      CNAME   serverWeb
 
 ;service mail
 @	IN	MX	mail.wt20.ephec-ti.be
