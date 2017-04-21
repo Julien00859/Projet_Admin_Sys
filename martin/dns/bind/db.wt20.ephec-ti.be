@@ -7,7 +7,7 @@ $TTL    604800
                         2419200         ; Expire
                          604800 )       ; Negative Cache TTL
 ;
-; name severs - NS records
+; name servers - NS records
         IN      NS      ns1.wt20.ephec-ti.be.
 
 ; name servers - A records
@@ -20,4 +20,12 @@ www             IN      CNAME   serverWeb
 b2b             IN      CNAME   serverWeb
 intranet        IN      CNAME   serverWeb
 
+;service mail
+@	IN	MX	mail.wt20.ephec-ti.be
+mail		IN	A	79.137.38.238
 
+mail._domainkey IN      TXT     (
+"v=DKIM1;k=rsa;p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDIXcqED3HHUr6zlusYiWiyp9tsRf4"
+"tygH7VtnhwCtGLzHlyIa3F/Nm8oTdUnCrj0m2BmstEtakKxbWh4ythtrHvWm3/m4OiDptObxo+yxFET5bQx"
+"PKlfQv7o/+Uo/gxH/J8URPGLZd9KepWD5MjN6JjXiEUiuha79AVKzpOUzjhwIDAQAB" ) 
+; ----- DKIM key mail for wt20.ephec-ti.be
