@@ -9,4 +9,5 @@ services:
   volumes: 
    - ./dns/bind:/etc/bind
    - ./dns/bind/db.wt20.ephec-ti.be:/var/cache/bind/db.wt20.ephec-ti.be
+   - ./dns/resolv.conf:/etc/resolv.conf
 
