@@ -22,7 +22,9 @@ b2b             IN      CNAME   serverWeb
 
 ;service mail
 mail		IN	A	79.137.38.238
-
+smtp		IN	CNAME	mail
+pop3		IN	CNAME	mail
+imap		IN	CNAME	mail
 mail._domainkey IN      TXT     ( "v=DKIM1;"
 	"k=rsa;"
 	"p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDIXcqED3HHUr6zlusYiWiyp9tsRf4"
