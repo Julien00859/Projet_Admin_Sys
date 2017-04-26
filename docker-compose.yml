@@ -1,0 +1,20 @@
+version: "2"
+services:
+  dns_SOA_interne:
+    image: resystit/bind9
+    container_name: dns_SOA_interne
+    ports: 
+      - "53:53/udp"
+      - "53:53/tcp"
+    volumes:
+      - ./dns/bind:/etc/bind
+      - ./dns/bind/db.wt20.ephec-ti.be:/var/cache/bind/db.wt20.ephec-ti.be
+      - ./dns/resolv.conf:/etc/resolv.conf
+  voip: 
+    container_name: asterisk
+    image: respoke/asterisk
+    ports:
+      - "5060:5060/udp"
+      - "5060:5060/tcp"
+    volumes: 
+      - ./asterisk:/etc/asterisk

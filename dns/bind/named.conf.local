@@ -1,0 +1,36 @@
+//
+// Do any local configuration here
+//
+
+// Consider adding the 1918 zones here, if they are not used in your
+// organization
+//include "/etc/bind/zones.rfc1918";
+
+acl "friends" {
+        79.137.38.238;
+        79.137.38.250;
+        151.80.119.124;
+	none;
+};
+
+view "safe"{
+ match-clients{"friends";};
+ zone "wt20.ephec-ti.be" {
+        type master;
+        file "/var/cache/bind/db.wt20.ephec-ti.be";
+ };
+
+ zone "intranet.ephec-ti.be" {
+ 	type forward;
+	forwarders {79.137.38.238;};
+ };
+};
+
+view "vilain" {
+ zone "wt20.ephec-ti.be" {
+	type master;
+	file "/var/cache/bind/db.wt20.ephec-ti.be";
+ };
+};
+
+

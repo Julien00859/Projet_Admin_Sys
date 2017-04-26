@@ -1,0 +1,135 @@
+http://denisrosenkranz.com/tuto-installer-et-configurer-asterisk-sous-debian-6-et-ubuntu/
+http://www.supinfo.com/articles/single/531-installer-serveur-voip-asterisk-ses-clients
+https://fr.wikipedia.org/wiki/Session_Initiation_Protocol
+http://www.pythagore-fd.fr/documents/extraits/pdf/formation-RS024-Asterisk-sip.conf.pdf 
+https://en.wikipedia.org/wiki/List_of_SIP_response_codes
+https://www.youtube.com/watch?v=532_DP68jEE
+https://www.3cx.com/pbx/sip-server/
+http://areskibelaid.com/asterisk-on-docker/
+http://asteriskdocs.org/en/2nd_Edition/asterisk-book-html-chunk/asterisk-APP-A-SECT-2.html
+
+https://hub.docker.com/r/respoke/asterisk/
+
+
+__ASTERISK__
+
+>PBX system Asterisk PBX allows people to make calls to each other but also 
+connects them with telephone services, such as reaching the public network or 
+VoIP services
+
+__RTP__
+https://www.voip-info.org/wiki/view/RTP
+ 
+> Real-time Transport Protocol >< Reliable Transport Protocol (EIGRP)
+> used to sent voice packets for SIP VOIP calls. Transporte du media indentifié 
+	par des param
+> in a voip session (SIP) = 2 RTP stream !
+	May have problem of NAT if one of the parties is inside a NAT => symetric RTP
+	
+> apparently n RTP port open = n simultaneous calls
+
+> the problem is that RTP ports are "pseudo-dynamics" et il peut y en avoir bcp!
+
+
+__FICHIERS_DE_CONF__
+
+/etc/asterisk contient
+
+	sip.conf 
+			//conf générale
+			> language=fr // met les sont par défaut en francais
+			
+	users.conf 
+			//conf utilisateurs
+			>[6002] –> Numéro SIP
+				type=friend –> type d’objet SIP, friend = utilisateur
+				host=dynamic –> Vous pouvez vous connecter a ce compte SIP a partir de n’importe quelle adresse IP
+				dtmfmode=rfc2833 –> type de rfc utilisé
+				disallow=all –> Désactivation de tous les codecs
+				allow=ulaw –> Activation du codec µlaw
+				fullname = Albert DUPONT –> Prénom et NOM de l’utilisateur (ce qui sera afficher sur le téléphone lors d’un appel)
+				username = adupont –> Nom d’utilisateur
+				secret=secret –> Mot de passe du compte SIP
+				context = work –> Contexte = groupe dont les membres peuvent communiquer entre eux
+			> possiblité de créer des templates 
+				[template](!)
+				+ les champs qui ne changent pas
+				-> appel de template 
+					[numero SIP](template)
+					les champs uniques au user
+			
+			
+	extensions.conf 
+			> Dialplan =  en gros: « Que de passe-t’il si j’appelle tel numéros? »
+			[work] = contexte auxquels on peut rajouter des users (voir users.conf)
+			on définit dedans les relations entre users grace aux extensions comme suit
+			
+			exten => _6XXX,1,Dial(SIP/${EXTEN}, 20)
+			
+			_6XXX = les numéros de 6000 à 6999 (_ permet d'utiliser les regex)
+					« X » : correspond aux chiffres de 0 à 9
+					« Z » : correspond aux nombres de 1 à 9
+					« N » : correspond aux nombres de 2 à 9
+					« . » : correspond à un ou plusieurs chiffres
+					« ! » : correspond à zéro ou plusieurs chiffres
+			1, numéro d'ordre d'application de l'extensions (ici la première)
+			Dial, application qui va être utilisé
+			SIP, protocole utilisé (Service Initiation Protocol)
+			${EXTEN} accueillera le numéro de destination, (permet d'écrire une ligne
+				pour pouvoir appeler plein de numéro)
+			20, délai avant de passer à l'action suivante
+			
+			ex si on appelle 6001 la ligne deviendra :
+			
+			exten => 6001,1,Dial(SIP/6001,20)
+			
+	rtp.conf 
+			> configuration rtp, notamment ouverture des ports 
+			ex : 
+			rtpstart=16384
+			rtpend=16394
+			
+			on a ouvert 10 port pour rtp => 10 appel simultanément max
+			
+__COMMANDE__
+
+asterisk -cvvvvvvvvvvr
+		afficher la console d'asterisk 
+		
+_en console asterisk 
+
+reload 
+		//permet de recharger la conf sans devoir redémarre le serveur 
+sip show users
+		//afficher les comptes utilisateurs créés
+		
+__PROBLEMES_ENCONTRES__
+
+	>imposs d'enregistrer des comptes clients error (408 SIP) ni avec xlite (pc)
+	ni avec CSipSimple
+	408 Request Timeout
+	Couldn't find the user in time. The server could not produce a response within
+	a suitable amount of time, for example, if it could not determine the location 
+	 of the user in time.
+	=> une des solutions a été déja d'autoriser le port 5060 sur le firewall même 
+	si ça règle pas notre problème ...
+	=> externip
+	netstat -lnpa | head, il semble que on n'écoute qu'en ipv6 sur le port 5060, 
+	... ca saoule un peu 
+
+	__SIP_SERVER__
+
+-> == SIP proxy or Registrar
+-> ne fait que gérer les sessions
+
+		>Set up a session between two (or more) endpoints (an audio conference would have more than two endpoints)
+		>Negotiate the media parameters and specifications for the session for each endpoint using the SDP protocol
+		>Adjust the media parameters and specifications of a session DURING the session (putting a call on hold, for example)
+		>Substituting one endpoint with a new endpoint (call transfer)
+		>Terminate a session
+		
+		=> pas de transmission de media !!!! => media server using RTP protocol
+		quasi toujours sur la même machine, on peut les séparer pour mieux gérer le
+		flux de média
+		
+		=> apparemment asterisk est sensé faire sip server ET media server
