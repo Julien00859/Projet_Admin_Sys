@@ -20,6 +20,9 @@ serverWeb       IN      A       151.80.119.124
 www             IN      CNAME   serverWeb
 b2b             IN      CNAME   serverWeb
 
+;service voip
+;_sip._udp	IN	A	79.137.38.238
+;_sip._udp.wt20.ephec-ti.be.	IN	SRV 	1	0	5060	sip		
 ;service mail
 mail		IN	A	79.137.38.238
 smtp		IN	CNAME	mail
