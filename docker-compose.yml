@@ -10,11 +10,15 @@ services:
       - ./dns/bind:/etc/bind
       - ./dns/bind/db.wt20.ephec-ti.be:/var/cache/bind/db.wt20.ephec-ti.be
       - ./dns/resolv.conf:/etc/resolv.conf
-  voip: 
+  asterisk: 
     container_name: asterisk
-    image: respoke/asterisk
+    image: matiuso/debisterisk
     ports:
       - "5060:5060/udp"
       - "5060:5060/tcp"
     volumes: 
-      - ./asterisk:/etc/asterisk
+      - ./asterisk/users.conf:/etc/asterisk/users.conf
+      - ./asterisk/sip.conf:/etc/asterisk/sip.conf
+      - ./asterisk/extensions.conf:/etc/asterisk/extensions.conf
+     # - ./asterisk/rtp.conf:/etc/asterisk/rtp.conf
+     # - ./asterisk/pjsip.conf:/etc/asterisk/pjsip.conf
