@@ -20,7 +20,7 @@ view "safe"{
         file "/var/cache/bind/db.wt20.ephec-ti.be";
  };
 
- zone "intranet.ephec-ti.be" {
+ zone "intranet.wt20.ephec-ti.be" {
  	type forward;
 	forwarders {79.137.38.238;};
  };
