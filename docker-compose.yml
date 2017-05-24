@@ -20,5 +20,7 @@ services:
       - ./asterisk/users.conf:/etc/asterisk/users.conf
       - ./asterisk/sip.conf:/etc/asterisk/sip.conf
       - ./asterisk/extensions.conf:/etc/asterisk/extensions.conf
+      - ./asterisk/logger.conf:/etc/asterisk/logger.conf
+      - /var/log/asterisk:/var/log/asterisk
      # - ./asterisk/rtp.conf:/etc/asterisk/rtp.conf
      # - ./asterisk/pjsip.conf:/etc/asterisk/pjsip.conf
