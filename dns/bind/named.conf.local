@@ -15,21 +15,17 @@ acl "friends" {
 
 view "safe"{
  match-clients{"friends";};
- zone "wt20.ephec-ti.be" {
-        type master;
-        file "/var/cache/bind/db.wt20.ephec-ti.be";
- };
 
- zone "intranet.wt20.ephec-ti.be" {
- 	type forward;
-	forwarders {79.137.38.238;};
+ zone "wt20.ephec-ti.be" {
+ 	type master;
+	file "/var/cache/bind/internal.db.wt20.ephec-ti.be";
  };
 };
 
 view "vilain" {
  zone "wt20.ephec-ti.be" {
 	type master;
-	file "/var/cache/bind/db.wt20.ephec-ti.be";
+	file "/var/cache/bind/external.db.wt20.ephec-ti.be";
  };
 };
 
