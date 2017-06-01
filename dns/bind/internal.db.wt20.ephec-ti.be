@@ -1,3 +1,4 @@
+; internal zone file, accesible only by trusted one
 $ORIGIN wt20.ephec-ti.be.
 $TTL    604800
 @       IN      SOA     ns1.wt20.ephec-ti.be admin.wt20.ephec-ti.be (
@@ -8,7 +9,7 @@ $TTL    604800
                          604800 )       ; Negative Cache TTL
 ;
 ; name servers - NS records
-        IN      NS      ns1.wt20.ephec-ti.be.
+        IN      NS      ns1.wt20.ephec-ti.be. ;SOA
 	IN	MX	10	 mail
 
 ; name servers - A records
@@ -22,7 +23,7 @@ b2b             IN      CNAME   serverWeb
 intranet	IN	CNAME	serverWeb
 
 ;service mail
-mail		IN	A	79.137.38.238
+mail		IN	A	79.137.38.238 ; vps pierre
 smtp		IN	CNAME	mail
 pop3		IN	CNAME	mail
 imap		IN	CNAME	mail
@@ -34,6 +35,6 @@ mail._domainkey IN      TXT     ( "v=DKIM1;"
 ; ----- DKIM key mail for wt20.ephec-ti.be
 
 ;service voip
-_sip._udp	SRV 0 0 6201 sip 
+_sip._udp	SRV 0 0 6201 sip ; priority weight port target
 _sip._tcp 	SRV 0 0 6201 sip
 sip 		IN	A	79.137.38.250	
