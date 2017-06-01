@@ -33,6 +33,6 @@ mail._domainkey IN      TXT     ( "v=DKIM1;"
 ; ----- DKIM key mail for wt20.ephec-ti.be
 
 ;service voip
-_sip._udp	SRV 0 0 6201 sip 
-_sip._tcp 	SRV 0 0 6201 sip
+_sip._udp	SRV 0 0 5060 sip 
+_sip._tcp 	SRV 0 0 5060 sip
 sip 		IN	A	79.137.38.250	
