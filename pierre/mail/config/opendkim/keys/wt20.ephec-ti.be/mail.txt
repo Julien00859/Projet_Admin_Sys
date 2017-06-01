@@ -1,2 +1,0 @@
-mail._domainkey	IN	TXT	( "v=DKIM1; k=rsa; "
-	  "p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDdESn8g0abyYooXBZZGhXEFNAHXBwUYC8ss75+B38ckW5jlgK44AqdxA1ZoR/pcoi1qB7dTefLTsZzecNg5YjPA5rMZ9s74fqVPw8aWqmwMd0T3nPbuPDvZaizdhY6vgbraRC4j/G5SvpzDvKHScfjYX3SeOiXUQ+OixQkMtPCxwIDAQAB" )  ; ----- DKIM key mail for wt20.ephec-ti.be
