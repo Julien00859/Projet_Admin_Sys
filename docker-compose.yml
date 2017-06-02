@@ -7,6 +7,8 @@ services:
       - POSTGRES_USER=woodytoys
       - POSTGRES_DB=woodytoys
       - POSTGRES_PASSWORD=super-secret-pwd
+    volumes:
+      - ./flask:/code
     links:
       - postgres
   postgres:
@@ -30,9 +32,8 @@ services:
       - flask
   dns:
     image: resystit/bind9
-    container_name: dns
     ports: 
       - "53:53/udp"
       - "53:53/tcp"
     volumes:
-      - /home/martin/dns/bind:/etc/bind    
+      - ./dns/bind:/etc/bind    

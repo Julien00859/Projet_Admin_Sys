@@ -1,0 +1,26 @@
+options {
+        directory "/var/bind";
+        dnssec-validation auto;
+
+        auth-nxdomain no;    # conform to RFC1035
+
+        // Configure the IPs to listen on here.
+        listen-on port 53 { any; };
+        listen-on-v6 { any; };
+
+        // allow the server to act as recursive and ask others
+        recursion yes;
+
+        // Allows only trusted ip server to query the resolver
+        allow-query {
+       	    79.137.38.238;
+            79.137.38.250;
+            151.80.119.124;
+            127.0.0.1;
+        };
+
+
+        pid-file "/var/run/named/named.pid";
+
+};
+

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>B2B | WoodyToys</title>
+	<meta charset=utf-8>
+	<style>
+		body {
+			font-family: monospace;
+		}
+		table {
+			border-collapse: collapse;
+			margin-bottom: 1em;
+		}
+		td, th {
+			border: 1px solid black;
+			padding: 0.1em;
+		}
+	</style>
+</head>
+<body>
+	<table>
+		<tr><th>Nom</th><th>Stock</th></tr>
+		{% for name, stock in products %}
+		<tr><td>{{ name }}</td><td>{{ stock }}</td></tr>
+		{% endfor %}
+	</table>
+	<form action="/" method=POST>
+		<fieldset>
+			<legend>Ajouter des produits</legend>
+			<p>Nom:&nbsp;&nbsp; <input type=text name="name" required></p>
+			<p>Stock: <input type=number name="stock" min=1 step=1 required></p>
+			<p><input type=submit></p>
+		</fieldset>
+	</form>
+</body>
+</html>

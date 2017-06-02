@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, request, render_template
 from psycopg2 import connect as dbconnect
 from os import environ
 from datetime import datetime
@@ -16,20 +16,14 @@ for x in range(5):
 		break
 		
 
-@app.route("/")
+@app.route("/", methods=["GET", "POST"])
 def index():
-	return "Hello world !\n"
-
-@app.route("/now")
-def now():
-	return datetime.now().strftime("%c") + "\n"
-
-@app.route("/db")
-def db():
 	cur = conn.cursor()
+	if request.method == "POST":
+		cur.execute("INSERT INTO product (name, stock) VALUES (%s, %s);", (request.form["name"], request.form["stock"]))
+	
 	cur.execute("SELECT name, stock FROM product")
-
-	return jsonify(list(map(lambda row: {"name": row[0], "stock": row[1]}, cur.fetchall())))
+	return render_template("index.html", products=cur.fetchall())
 
 if __name__ == "__main__":
 	app.run(host="0.0.0.0", port=8080)
