@@ -6,7 +6,7 @@ School Project
 
 (Martin vps) `vps375375.ovh.net` `79.137.38.250` https://github.com/NicoleEtLui/Projet_Admin_Sys_Martin
 
-(Julien vps) `vps375394.ovh.net` `151.80.119.124` https://github.com/Julien00859/Projet_Admin_Sys
+(Julien vps) `vps375394.ovh.net` `151.80.119.124` https://github.com/Julien00859/Projet_Admin_Sys_Julien
 
 ### Shéma logique
 
