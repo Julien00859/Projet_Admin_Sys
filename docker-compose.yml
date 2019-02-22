@@ -72,8 +72,29 @@ services:
       - flask
   dns:
     image: resystit/bind9
+  dns_SOA_interne:
+    image: resystit/bind9
+    container_name: dns_SOA_interne
     ports: 
       - "53:53/udp"
       - "53:53/tcp"
     volumes:
       - ./dns/bind:/etc/bind
+      - ./dns/bind/internal.db.wt20.ephec-ti.be:/var/cache/bind/internal.db.wt20.ephec-ti.be
+      - ./dns/bind/external.db.wt20.ephec-ti.be:/var/cache/bind/external.db.wt20.ephec-ti.be
+      - ./dns/resolv.conf:/etc/resolv.conf
+  asterisk: 
+    container_name: asterisk
+    image: matiuso/debisterisk
+    ports:
+      - "5060:5060/udp"
+      - "5060:5060/tcp"
+    volumes: 
+      - ./asterisk/users.conf:/etc/asterisk/users.conf
+      - ./asterisk/sip.conf:/etc/asterisk/sip.conf
+      - ./asterisk/extensions.conf:/etc/asterisk/extensions.conf
+      - ./asterisk/logger.conf:/etc/asterisk/logger.conf
+      - ./asterisk/voicemail.conf:/etc/asterisk/voicemail.conf
+      - /var/log/asterisk:/var/log/asterisk
+     # - ./asterisk/rtp.conf:/etc/asterisk/rtp.conf
+     # - ./asterisk/pjsip.conf:/etc/asterisk/pjsip.conf

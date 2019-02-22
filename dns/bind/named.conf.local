@@ -1,12 +1,24 @@
-//
-// Do any local configuration here
-//
+acl "friends" {
+	79.137.38.238;
+	79.137.38.250;
+	151.80.119.124;
+	none;
+};
 
-// Consider adding the 1918 zones here, if they are not used in your
-// organization
-//include "/etc/bind/zones.rfc1918";
+// if trusted, they access to this view and see the internal zone file that contain intranet RR
+view "safe"{
+	match-clients{"friends";};
 
-zone "wt20.ephec-ti.be" {
-        type master;
-        file "/var/cache/bind/db.wt20.ephec-ti.be";
+	zone "wt20.ephec-ti.be" {
+		type master; // this server is master for this zone (could be forwarder to another server
+		file "/var/cache/bind/internal.db.wt20.ephec-ti.be"; // the zone file to use
+	};
+};
+
+// if not in acl, not trusted and so arrive to this view that contain everything but the intranet RR
+view "vilain" {
+	zone "wt20.ephec-ti.be" {
+		type master;
+		file "/var/cache/bind/external.db.wt20.ephec-ti.be";
+	};
 };
