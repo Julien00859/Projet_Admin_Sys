@@ -9,9 +9,12 @@ options {
         listen-on-v6 { any; };
 
         // If you want to allow only specific hosts to use the DNS server:
-        //allow-query {
-        //      127.0.0.1;
-        //};
+        allow-query {
+            79.137.38.238;
+            79.137.38.250;
+            151.80.119.124;
+            127.0.0.1;
+        };
 
         // Specify a list of IPs/masks to allow zone transfers to here.
         //
@@ -35,22 +38,5 @@ options {
         //      109.129.29.11;
         // };
         recursion yes;
-
 };
-
-//include "/etc/bind/named.conf.local";
-//
-// Do any local configuration here
-//
-
-// Consider adding the 1918 zones here, if they are not used in your
-// organization
-//include "/etc/bind/zones.rfc1918";
-
-//zone "wt20.ephec-ti.be" {
-//        type master;
-//        file "/var/cache/bind/db.wt20.ephec-ti.be";
-//};
-
-
 

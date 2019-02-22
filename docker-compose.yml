@@ -40,3 +40,40 @@ services:
       - SA_TAG2=6.31
       - SASL_PASSWD="lol"
       - SSL_TYPE=letsencrypt
+  flask:
+    build: 
+      context: ./flask/
+    environment:
+      - POSTGRES_USER=woodytoys
+      - POSTGRES_DB=woodytoys
+      - POSTGRES_PASSWORD=super-secret-pwd
+    volumes:
+      - ./flask:/code
+    links:
+      - postgres
+  postgres:
+    image: postgres:alpine
+    volumes:
+      - ./flask/sql/:/docker-entrypoint-initdb.d/
+    environment:
+      - POSTGRES_USER=woodytoys
+      - POSTGRES_DB=woodytoys
+      - POSTGRES_PASSWORD=super-secret-pwd
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./nginx/www:/var/www/
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - /etc/letsencrypt/:/etc/letsencrypt/
+    ports:
+      - "80:80"
+      - "443:443"
+    links:
+      - flask
+  dns:
+    image: resystit/bind9
+    ports: 
+      - "53:53/udp"
+      - "53:53/tcp"
+    volumes:
+      - ./dns/bind:/etc/bind
